@@ -1,7 +1,7 @@
 # COSC 3337 - Data Science I 
 ## Decison Trees, SVM, and K-NN Assignment ##
 
-### Due Date: October 11, 11:56 PM ###
+### Due Date: March X, 11:59 PM ###
 
 #### The goal of this assignment is to:
 1. Understand how decision trees, k-nn, and support vector machines (SVMs) are used for classification tasks.
@@ -9,32 +9,45 @@
 3. Gain proficiency in using recall, precision, and accuracy as metrics for evaluating classification model performance.
 4. Learn to use cross-validation techniques to assess model performance.
 
-## Dataset - Emotion Recognition
-**Intended Outcome:** Apply machine learning algorithms for the task of emotion recognition in tweets. This assignment will focus on understanding and implementing classification algorithms such as decision trees, k-nearest neighbors (k-nn), and support vector machines (SVMs). Students will also gain skills in model evaluation and hyperparameter tuning.
+## Dataset - Dry Beans
+**Intended Outcome:** Apply machine learning algorithms for the task of classifying varieties of beans based on visual morphological measurements. This assignment will focus on understanding and implementing classification algorithms such as decision trees, k-nearest neighbors (k-nn), and support vector machines (SVMs). Students will also gain skills in model evaluation and hyperparameter tuning.
 
-**Dataset Description:** The dataset for this assignment is adapted from the SemEval2018's "Affects in Tweets" task. Originally a multi-label classification problem involving 11 emotions, it has been transformed into a multi-class classification problem for this assignment. Only tweets labeled with a single emotion are considered, and the assignment will focus on the four most common emotions: Anger, Joy, Sadness, and Optimism.
+**Dataset Description:** The dataset for this assignment is adapted from the paper [Multiclass classification of dry beans using computer vision and machine learning techniques](https://www.sciencedirect.com/science/article/pii/S0168169919311573?via%3Dihub) by Koklu et al in which the authors evaluate the capabilities of several machine learning models in classifying the varieties of beans based on the output of an image segmentation algorithm.  Features extracted from the segmented images pertain to the size, shape, and structure of each bean. The dataset contains 13,611 instances belonging to 7 different varieties, which are listed below.
 
-**Dataset Preprocessing:** The original dataset consisted of 'text' and 'label' columns. The text has been preprocessed with user mentions anonymized by a @USER token, line breaks and website links are removed. Following preprocessing, the Universal Sentence Encoder is used to create sentence embeddings for each tweet, afterwhich Principal Component Analyses is applied and the embedding dimensions reduced from 512 to 128. 
+**Dataset Preprocessing:** The dataset remains identical to the original, only with class labels encoded as numerical values in the 'Class' column rather than the original string format. The original class column is left for reference as "Class_String." Additionally, the four Shape Factor columns are dropped.
 
 **Attributes**
 
-The text column is not expected to be used in this assignment. It is presented for the students reference of the original tweet. The features used for this assignment are the 128 Principal Components dervied from the original 512 dimensonal sentence embedding. 
-- *text*: Original text of the tweet
-- *Class labels for each tweet*
-    - Anger: 0
-    - Joy: 1
-    - Optimism: 2
-    - Sadness: 3
-- *feature columns*
-    - enc_0 to enc_127
+The dataset contains 
 
-*Dataset pre-processed by Tuck, Bryan, E.*
+- *[Class_String]:*: Original text-based class labels
+- *[Class]: Class labels for each bean*
+    - Barbunya: 0
+    - Bombay: 1
+    - Cali: 2
+    - Dermosan: 3 
+    - Horoz: 4
+    - Seker: 5
+    - Sira: 6
+- *12 feature columns:*
+    - Area: The area of a bean zone and the number of pixels within its boundaries.
+    - Perimeter: Bean circumference; the length of its border.
+    - MajorAxisLength: The distance between the ends of the longest line that can be drawn from a bean.
+    - MinorAxisLength: The longest line that can be drawn from the bean while standing perpendicular to the main axis.
+    - AspectRation: Defines the relationship between the Major and Minor Axis Lengths.
+    - Eccentricity: Eccentricity of the ellipse having the same moments as the region.
+    - ConvexArea: Number of pixels in the smallest convex polygon that can contain the area of a bean seed.
+    - EquivDiameter: The diameter of a circle having the same area as a bean seed area.
+    - Extent: The ratio of the pixels in the bounding box to the bean area.
+    - Solidity: Also known as convexity. The ratio of the pixels in the convex shell to those found in beans.
+    - roundness: Calculated with the following formula: (4piA)/(P^2)
+    - Compactness: Measures the roundness of an object: (Equivalent Diameter / Major Axis Length).
 
 ### Assignment Tasks ###
 
 **Task 1**
 
-A. Using all attributes, build a Decision Tree model to predict emotions: Train the Decision Tree model using the given maximum depths (3, 7, 11, 15).  **8 points**
+A. Using all attributes, build a Decision Tree model to predict bean varieties: Train the Decision Tree model using the given maximum depths (3, 7, 11, 15).  **8 points**
 
 B. Perform 5-fold cross-validation for each of the 4 max depths and compute accuracy (mean of validation scores), precision and recall. Generate a table, as given below, for the obtained results. **5 points**   
 
@@ -52,7 +65,7 @@ D. Explain the meaning of the difference in accuracy, precision and recall score
 
 **Task 2**
 
-A. Using all attributes, build a k-nn classifier to predict emotions: Train the k-nn using the given neighbors (3, 9, 17, 25).  **8 points**
+A. Using all attributes, build a k-nn classifier to predict bean varieties: Train the k-nn using the given neighbors (3, 9, 17, 25).  **8 points**
 
 B. Perform 5-fold cross-validation for each of the 4 neighbor size and compute accuracy (mean of validation scores), precision and recall. Generate a table, as given below, for the obtained results. **5 points**
 
@@ -70,7 +83,7 @@ D. Explain the meaning of the difference in accuracy, precision and recall score
 
 **Task 3**
 
-A. Using all attributes, build an SVM Model to predict emotions: Train the SVM model using the given kernel functions (linear, polynomial, rbf, sigmoid). **10 points**
+A. Using all attributes, build an SVM Model to predict bean varieties: Train the SVM model using the given kernel functions (linear, polynomial, rbf, sigmoid). **10 points**
 
 B. Perform 5-fold cross-validation for each of the 4 kernel functions and compute accuracy (mean of validation scores), precision and recall. Generate a table, as given below, for the obtained results. **5 points**
 
